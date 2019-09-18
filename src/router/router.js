@@ -90,6 +90,11 @@ export default [{
     redirect: to => '/'
   },
   {
+    path: '/store',
+    name: 'store',
+    component: () => import('@/views/store.vue')
+  },
+  {
     // 配置一个404页面，需要配置在最后面
     // *匹配所有路径，所以放最后，前面的权重大，有页面就直接显示；都没有配置的路径则跳转到404
     path: '*',
