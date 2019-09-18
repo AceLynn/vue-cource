@@ -33,10 +33,10 @@ export default {
   },
   beforeRouteLeave (to, from, next) {
     // 比如填写了表单，还未保存，就在跳转前提示
-    const leave = confirm('您确定要离开嘛？');
-    if(leave) next();
-    // next(false)不跳转
-    else next(false);
+    // const leave = confirm('您确定要离开嘛？');
+    // if(leave) next();
+    // // next(false)不跳转
+    // else next(false);
   },  
   methods: {
     handlerClick(type) {
