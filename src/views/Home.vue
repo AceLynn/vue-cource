@@ -6,7 +6,8 @@
     {{food}}
     <br>
     <button @click="handlerClick('back')">返回上一页</button>
-    <p><button @click="getInfo">获取用户信息</button></p>
+    <img :src="imgsrc" alt="">
+    <p><button @click="getInfo" :style="{background: bgColor }">获取用户信息</button></p>
   </div>
 </template>
 
@@ -20,6 +21,12 @@ import {getUserInfo} from '@/api/user'
 
 export default {
   name: 'home',
+  data(){
+    return {
+      imgsrc: '',
+      bgColor: '',
+    }
+  },
   components: {
     HelloWorld
   },
@@ -51,7 +58,9 @@ export default {
     },
     getInfo() {
       getUserInfo().then(res => {
-        console.log(res)
+        console.log(res.data)
+        this.imgsrc = res.data.img1;
+        this.bgColor = res.data.color;
       });
     }
   }

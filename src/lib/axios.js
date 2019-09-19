@@ -37,7 +37,7 @@ class HttpRequest {
 
     // 回调拦截器
     instance.interceptors.response.use(res => {
-      console.log(res);
+      // console.log(res);
       delete this.queue[url];
       const { data, status } = res;
       return { data, status };
@@ -52,7 +52,7 @@ class HttpRequest {
     // 合并config和options参数，es6语法
     // 后面的options如果key相同，会覆盖config的值
     options = Object.assign(this.getInsideConfig(), options);
-    console.log(options)
+    // console.log(options)
     // 无模拟的api接口
     options.url = this.baseUrl + options.url;
     this.interceptors(instance, options.url);
