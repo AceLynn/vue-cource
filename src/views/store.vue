@@ -14,6 +14,9 @@
     <p>input last letter: {{inputValueLastLetter}}</p>
     <p>appNameWidthVer: {{appNameWidthVer}}</p>
     <p>firstletter: {{firstLetter}}</p>
+    <p><button @click="changeAppName">修改appname</button></p>
+    <p><button @click="changeVersion">修改version</button></p>
+    <p>{{appVersion}}</p>
   </div>
 </template>
 
@@ -22,7 +25,7 @@ import AInput from '_c/AInput';
 import AShow from '_c/AShow';
 // import vuex from 'vuex';
 // const mapState = vuex.mapState;
-import { mapState, mapGetters } from 'vuex';
+import { mapState, mapGetters, mapMutations } from 'vuex';
 
 // import { createNamespacedHelpers } from 'vuex';
 // const { mapState } = createNamespacedHelpers('user');
@@ -43,7 +46,8 @@ export default {
     // ...mapState(['appName']),
     ...mapState({
       appName: state => state.appName,
-      userName: state => state.user.userName
+      userName: state => state.user.userName,
+      appVersion: state => state.appVersion
     }),
     // ...mapState({
     //   userName: state => state.userName
@@ -71,8 +75,29 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      'updateAppName',
+      'setAppVer'
+    ]),
     handleInput(val) {
       this.inputValue = val;
+    },
+    changeVersion() {
+      this.setAppVer();
+    },
+    // changeAppName() {
+    //   // this.$store.commit('updateAppName', {
+    //   //   appName: 'newAppName#'
+    //   // });
+    //  // 对象调用方式
+    //   this.$store.commit({
+    //     type: 'updateAppName',
+    //     appName: 'newAppName#'
+    //   });
+    // },
+    changeAppName() {
+      // mapMutations里面的函数，可以直接this调用
+      this.updateAppName('new game');
     }
   }
 };
