@@ -2,12 +2,21 @@
   <div>
     I'm Vue
     <!-- 父子组件通信 -->
-    <!-- <a-input v-model="inputValue" /> -->
-    <!-- <p>{{inputValue}}</p> -->
+    <!-- <a-input v-model="inputValue" />
+    <p>{{inputValue}}</p> -->
 
     <!-- 兄弟组件通信 -->
-    <a-input @input="handleInput" />
-    <a-show :content="inputValue" />
+    <!-- <a-input @input="handleInput" />
+    <a-show :content="inputValue" /> -->
+
+    <!-- 假设inputValue非本页面data定义，而是全局store.state里面定义的 -->
+    <!-- <a-input v-model="stateValue" /> -->
+    <!-- 双向绑定vuex 方法一 -->
+    <!-- <a-input :value="stateValue" @input="changeStateValue" />
+    <p>{{stateValue}}</p> -->
+    <!-- 方法二 -->
+    <a-input v-model="stateValue"></a-input>
+    <p>{{stateValue}}</p>
 
     <!-- <p>appname: {{appName}}</p> -->
     <p>username: {{userName}}</p>
@@ -52,8 +61,18 @@ export default {
       userName: state => state.user.userName,
       appVersion: state => state.appVersion,
       // 动态注册模块后，需要在state里注册一下新增的内容
-      todoList: state => state.newModuleList ? state.newModuleList.todoList : []
+      todoList: state => state.newModuleList ? state.newModuleList.todoList : [],
+      // stateValue: state => state.stateValue
     }),
+    stateValue: {
+      // 手动设置get和set
+      get() {
+        return this.$store.state.stateValue;
+      },
+      set(value) {
+        this.setStateValue(value);
+      }
+    },
     // ...mapState({
     //   userName: state => state.userName
     // }),
@@ -82,7 +101,8 @@ export default {
   methods: {
     ...mapMutations([
       'updateAppName',
-      'setAppVer'
+      'setAppVer',
+      'setStateValue'
     ]),
     ...mapActions([
       'updateAppName2'
@@ -106,6 +126,9 @@ export default {
     changeAppName() {
       // mapMutations里面的函数，可以直接this调用
       this.updateAppName('new game');
+
+      // 严格模式下，不能直接在mutaitions外直接赋值
+      // this.$store.state.appName = 'new gamess';
     },
     changeAppName2() {
       // mapMutations里面的函数，可以直接this调用
@@ -131,6 +154,11 @@ export default {
       //     ]
       //   }
       // });
+
+    },
+    // 双向绑定 方法一
+    changeStateValue(val) {
+      this.setStateValue(val)
     }
   }
 };
